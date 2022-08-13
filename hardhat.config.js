@@ -2,25 +2,38 @@ require("@nomicfoundation/hardhat-toolbox");
 require("@nomiclabs/hardhat-etherscan");
 require('dotenv').config()
 
-module.exports = {
-  solidity: "0.8.16",
-  networks: {
-    hardhat: {
-      forking: {
-        url: process.env.MAINNET_RPC_URL,
+if(process.env.GOERLI_RPC_URL
+    && process.env.GOERLI_PRIVATE_KEY
+    && process.env.ETHERSCAN_API_KEY)
+{
+  module.exports = {
+    solidity: "0.8.16",
+    networks: {
+      hardhat: {
+        forking: {
+          url: process.env.MAINNET_RPC_URL,
+        },
       },
+      goerli: {
+        url: process.env.GOERLI_RPC_URL,
+        accounts: [process.env.GOERLI_PRIVATE_KEY],
+      }
     },
-    goerli: {
-      url: process.env.GOERLI_RPC_URL,
-      accounts: [process.env.GOERLI_PRIVATE_KEY],
+    etherscan: {
+      apiKey: process.env.ETHERSCAN_API_KEY
     }
-  },
-  etherscan: {
-    /*
-    apiKey: {
-      goerli: process.env.ETHERSCAN_API_KEY
+  };
+}
+else
+{
+  module.exports = {
+    solidity: "0.8.16",
+    networks: {
+      hardhat: {
+        forking: {
+          url: process.env.MAINNET_RPC_URL,
+        },
+      }
     }
-    */
-    apiKey: process.env.ETHERSCAN_API_KEY
-  }
-};
+  };
+}
