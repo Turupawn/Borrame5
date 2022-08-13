@@ -24,8 +24,8 @@ jobs:
         env:
           MAINNET_RPC_URL: ${{ secrets.MAINNET_RPC_URL }}
           CULITO: "HOLAAAAAAAA"
+        run: echo $CULITO
       - run: npm install
       - run: echo $PATH
       - run: echo $MAINNET_RPC_URL
-      - run: echo $CULITO
       - run: npx hardhat test
